@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CPEN291 Robot</title>
+    <link rel="stylesheet" type=text/css href="{{ url_for('static',filename='styles/Web_interface.css') }}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript" src="{{ url_for('static', filename='UI.js') }}"></script>
+    <h1> CPEN291 A11/12 Robot</h1>
+    <p>The robot has two states: line-following, and remote-controlling. 
+        Click "line-following" to control the robot on this web.</p>
+    <p>The current state is:</p>
+    <div id="buttons">
+        <button onclick="changeState()" id="toggleSwitch">remote-controlling</button>
+        <div id="forward" class="btn">Forward</div>
+        <div id="backward" class="btn">Backward</div>
+        <div id="left" class="btn">Left</div>
+        <div id="right" class="btn">Right</div>
+    </div>
+    <div id="outerRing"></div>
+    <div id="joystick"></div>
+    <div id="sliderContainter">
+        <p><br> Speed: </p>
+        <input type="range" min="0" max="100" value="50" class="slider" id="speedRange">
+        <p>slow &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
+                &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
+                &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
+                fast</p>
+    </div>
+    
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='UI.js') }}"></script>
+</body>
+</html>
