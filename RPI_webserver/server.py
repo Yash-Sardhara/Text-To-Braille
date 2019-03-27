@@ -1,9 +1,13 @@
+from __future__ import print_function
 from flask import Flask, render_template, request
 import sys
 import json
 from Text_To_Braille import printBrailleNumber
+import sys
+
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
@@ -35,13 +39,14 @@ def sendBraille():
 def test():
     c = request.args.get('c')
 
-    return json.dumps(printBrailleNumber(c)) 
+    return json.dumps(c) 
 
-@app.route("/getText")
+@app.route("/getText", methods = ['POST']) 
 def getText():
     text = request.get_json()
+    print("12341", file=sys.stderr)
     print(text, file=sys.stderr)
-    return text
+    return "text"
 
 
 if __name__ == "__main__":
