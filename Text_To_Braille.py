@@ -1,3 +1,5 @@
+
+outputs = []
 def textToBraille (character):
     toBraille = {"a":[1,0,0,0,0,0],
                  "b":[1,0,1,0,0,0],
@@ -40,11 +42,13 @@ def textToBraille (character):
     return toBraille[character]
 
 def tempPrint (characterVector) :
+    outputs.append(characterVector)
+    '''
     print(characterVector[0],characterVector[1])
     print(characterVector[2],characterVector[3])
     print(characterVector[4],characterVector[5])
     print("-----------")
-
+    '''
 def printBrailleNumber(character) :
     toBraille = {"1":[1,0,0,0,0,0],
                  "2":[1,0,1,0,0,0],
@@ -80,10 +84,12 @@ def printBraille (word) :
                 tempPrint(textToBraille(letter.lower()))
 
 def printBrailleSentence (sentence):
+    outputs.clear()
     words = sentence.split()
     for word in words:
         printBraille(word)
-        print("@@@@@@@@@@@")
+    return outputs
+        #print("@@@@@@@@@@@")
 
 string  = "cpen 291"
 printBrailleSentence(string)
