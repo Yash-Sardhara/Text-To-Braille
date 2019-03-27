@@ -34,9 +34,4 @@ function printBraille() {
     })
 }
 
-function myFunc(vars) {
-    console.log(vars);
-    return vars;
-}
-
 
