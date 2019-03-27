@@ -22,13 +22,11 @@ function printBraille() {
         dataType: "json"
     })
 
+
     var myText = document.getElementById('remind');
     myText.innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
     $('button').prop('disabled', true);
-   
-    return x;
-    
-    
+
 }
 
 
