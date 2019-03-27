@@ -25,11 +25,22 @@ def translator():
 def game():
     return render_template('game.html')
 
+@app.route("/sendBraille")
+def sendBraille():
+    text = request.args.get('text')
+
+    return render_template('translator.html', text = text)
+
 @app.route("/test")
 def test():
     c = request.args.get('c')
 
     return json.dumps(printBrailleNumber(c)) 
+
+@app.route("/getText")
+def getText():
+    text = request.get_json()
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)

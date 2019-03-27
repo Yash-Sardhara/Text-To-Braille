@@ -5,13 +5,16 @@
   <title>Braille-drawing Robot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
   <link rel="icon" href="../static/images/BigB.png" type="image/png">
 </head>
-<body>
 
+<body>
+<!-- Creating the top navigation bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="home.html">
       <img src="../static/images/BigB.png" width="30" height="30" alt="BigB Image">
+
       Home
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,21 +41,41 @@
           <a href="#" class="btn btn-primary" onclick="printBraille()">Submit</a>
         </div>
       </div>
+    </div>
+  </nav>
 
-      <div class="card" style="width: 49.5%; float:right;">
-          <div class="card-header">
-            Braille --> Text
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Input from keypad: </h5>
-            <p class="card-text" id="textFromKeypad">(null)</p>
-          </div>
-        </div>
+<!-- Creating the text to braille part -->
+  <div class="card" style="width: 49.5%; float:left;">
+    <div class="card-header">
+      Text --> Braille
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Type your text:</h5>
+      <p class="card-text">English alphabets, numbers, and punctuations including "#", ";", "'", "?", "!", ":", "-", "," are allowed.<br>
+        Our robot will start printing after you hit the "Submit" button. <br>
+        Note: you CANNOT stop the robot after you submit.<br> </p>
+      <textarea id="myTextArea" class="form-control" rows = "12" style="width: 100%;"></textarea>
+      <button type="button" class="btn btn-primary" id="submit" onclick="printBraille()">Submit</button>
+      <p class="card-text" id="remind"><br></p>
+    </div>
+  </div>
 
-    <script src="{{ url_for('static', filename='js/translator.js') }}"></script>
+<!-- Creating the braille to text part -->
+  <div class="card" style="width: 49.5%; float:right;">
+    <div class="card-header">
+      Braille --> Text
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Input from keypad: </h5>
+      <p class="card-text" id="textFromKeypad">(null)</p>
+    </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <script src="js/translator.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
