@@ -19,9 +19,21 @@ GPIO.setup(padCols[2], GPIO.OUT,initial=GPIO.HIGH)
 curr_time = time.time()
 start_time = curr_time
 
-capital_flag = 0
+sentence = ""
 number_flag = 0
 inputs = []
+braille_numbers = dict([
+    ('1', '1'),
+    ('14', '2'),
+    ('12', '3'),
+    ('125', '4'),
+    ('15', '5'),
+    ('124', '6'),
+    ('1245', '7'),
+    ('145', '8'),
+    ('24', '9'),
+    ('245', '0')
+    ])
 braille_dictionary = dict([
     ('1', 'a'),
     ('14', 'b'),
@@ -48,8 +60,17 @@ braille_dictionary = dict([
     ('2458', 'w'),
     ('1278', 'x'),
     ('12578', 'y'),
-    ('1578', 'z')
+    ('1578', 'z'),
+    ('4', ','),
+    ('47',';'),
+    ('45', ':'),
+    ('458', '.'),
+    ('478', '?'),
+    ('457', '!'),
+    ('7', "'"),
+    ('78', '-')
     ])
+
 
 
 def keypad_check():
@@ -65,27 +86,68 @@ def keypad_check():
                         return (keypad[i][j])
             GPIO.output(padCols[j], GPIO.HIGH) #turns off the col so that next iteration its not still on
     return '10'
-def submit():
+
+def number_handler():
+    global sentence,number_flag
     user_input = ""
+    inputs.sort()
     for i in inputs:
         user_input = user_input + i
     print(user_input)
     inputs.clear()
+    if (user_input == '58'):
+        number_flag = 0
+        return
     try:
-        print((braille_dictionary[user_input]))
+        print(braille_numbers[user_input])
+        number = braille_numbers[(user_input)]
+        print(number)
+        sentence = sentence + number
+    except:
+        print ("Not a real braille number")
+        
+def submit():
+    global sentence,number_flag
+    user_input = ""
+    inputs.sort()
+    for i in inputs:
+        user_input = user_input + i
+    print(user_input)
+    inputs.clear()
+    if (user_input == '2578'):
+        number_flag = 1
+        return
+    try:
+        char = braille_dictonary[user_input]
+        print(char)
+        sentence = sentence + char
     except:
         print ("Not a real braille character")
 
+def translate():
+    global sentence
+    print(sentence)
+    sentence = ""
+    
 def braille_to_char():
+    global sentence,number_flag
     input = keypad_check()
     if (input == '10'):
         return
     elif (input == '3'):
         del inputs[-1]
+    elif (input == '0'):
+        number_flag = 0
+        sentence = sentence + ' '
     elif (input == '*'):
         inputs.clear()
     elif (input == '#'):
-        submit()
+        if number_flag == 0:
+            submit()
+        else:
+            number_handler()
+    elif (input == '9'):
+        translate()
     elif (len(inputs) < 6):
         inputs.append(input)
 
