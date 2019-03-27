@@ -6,6 +6,8 @@ function printBraille() {
         chars.push(x[i]);
     }
     console.log(chars);
+    var myText = document.getElementById('remind');
+    myText.innerHTML = "Don't press until much later!";
     // $.ajax({
     //     type:"POST",
     //     contentType: "application/json;charset=utf-8",
