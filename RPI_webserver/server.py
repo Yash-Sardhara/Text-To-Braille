@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 # import sys
 import json
+from Text_To_Braille import printBrailleNumber
 
 app = Flask(__name__)
 
@@ -26,10 +27,9 @@ def game():
 
 @app.route("/test")
 def test():
-    number = request.args.get('num')
-    dict = {}
-    dict['retnum'] = int(number) * 2
-    return json.dumps(dict)
+    c = request.args.get('c')
+
+    return json.dumps(printBrailleNumber(c)) 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
