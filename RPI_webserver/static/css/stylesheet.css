@@ -1,0 +1,23 @@
+.carouselImages {
+    width: 100%;
+    height: 100%;
+}
+
+#dict {
+    position: relative; 
+    width: 1300px; 
+    left: 20px;
+    top: 10px;
+}
+
+.mainBackground {
+    width: 1500px;
+}
+
+#whatWeDo {
+    background: "../static/images/mainBackground1.png";
+    width: 1500px;
+    text-align: center; 
+    position: absolute; 
+    top: 1030px;
+}

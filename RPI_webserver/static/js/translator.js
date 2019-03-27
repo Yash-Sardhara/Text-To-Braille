@@ -3,16 +3,27 @@ var validChars = new Set(["a","b","c","d","e","f","g","h","i","j","k","l","m","n
     "U","V","W","X","Y","Z","#","0","1","2","3","4","5","6","7","8","9",";","'","?","!",":","-",","," "]); 
 
 function printBraille() {
-    var invalidInput = false;
     var input = document.getElementById('myTextArea').value;
     console.log(input);
+    // check if the input is valid
+    if (input.length == 0) {
+        document.getElementById('modalTitle').innerHTML = "Submission Failed!";
+        document.getElementById('modalBody').innerHTML = "Empty input";
+        return;
+    }
     for (var i=0; i<input.length; i++) {
         if(!validChars.has(input[i])){
-            var myText = document.getElementById('remind');
-            myText.innerHTML = "Invalid Input: ".concat(input[i],'.');
+            document.getElementById('modalTitle').innerHTML = "Submission Failed!";
+            document.getElementById('modalBody').innerHTML = "Invalid Input: ' ".concat(input[i], " '", '.');
             return;
         }
     }
+    // disable button and display note to user
+    document.getElementById('modalTitle').innerHTML = "Submission Successful!";
+    document.getElementById('modalBody').innerHTML = "Printing in progress...";
+    document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
+    $('button').prop('disabled', true);
+    // send request to server
     $.ajax({
         type:"POST",
         contentType: "application/json;charset=utf-8",
@@ -21,12 +32,11 @@ function printBraille() {
         data: JSON.stringify({input}),
         dataType: "json"
     })
+}
 
-
-    var myText = document.getElementById('remind');
-    myText.innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
-    $('button').prop('disabled', true);
-
+function myFunc(vars) {
+    console.log(vars);
+    return vars;
 }
 
 
