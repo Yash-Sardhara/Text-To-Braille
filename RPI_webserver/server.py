@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-# import sys
+import sys
 import json
 from Text_To_Braille import printBrailleNumber
 
@@ -40,6 +40,8 @@ def test():
 @app.route("/getText")
 def getText():
     text = request.get_json()
+    print(text, file=sys.stderr)
+    return text
 
 
 if __name__ == "__main__":
