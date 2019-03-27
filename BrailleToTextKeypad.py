@@ -99,7 +99,6 @@ def number_handler():
         number_flag = 0
         return
     try:
-        print(braille_numbers[user_input])
         number = braille_numbers[(user_input)]
         print(number)
         sentence = sentence + number
@@ -128,6 +127,8 @@ def translate():
     global sentence
     print(sentence)
     sentence = ""
+    url = "http://cpen291-12.ece.ubc.ca/sendBraille?text=" + sentence
+    result = request.get(url)
     
 def braille_to_char():
     global sentence,number_flag
@@ -136,6 +137,8 @@ def braille_to_char():
         return
     elif (input == '3'):
         del inputs[-1]
+    elif (input == '6'):
+        sentence = sentence[:-1]
     elif (input == '0'):
         number_flag = 0
         sentence = sentence + ' '
