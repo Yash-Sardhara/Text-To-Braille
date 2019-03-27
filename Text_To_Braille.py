@@ -1,5 +1,3 @@
-from queue import Queue
-
 def textToBraille (character):
     toBraille = {"a":[1,0,0,0,0,0],
                  "b":[1,0,1,0,0,0],
@@ -79,10 +77,18 @@ def printBraille (word) :
                 tempPrint(textToBraille(";"))
                 tempPrint(textToBraille(letter.lower()))
             else :
-                tempPrint(textToBraille(letter.lower()))  
+                tempPrint(textToBraille(letter.lower()))
 
-string  = "iancmx!"
-printBraille(string)
+def printBrailleSentence (sentence):
+    words = sentence.split()
+    for word in words:
+        printBraille(word)
+        print("@@@@@@@@@@@")
+
+string  = "cpen 291"
+printBrailleSentence(string)
+
+
 
 
 
