@@ -84,9 +84,11 @@ def printBraille (word) :
                 tempPrint(textToBraille(letter.lower()))
 
 def printBrailleSentence (sentence):
+    outputs.clear()
     words = sentence.split()
     for word in words:
         printBraille(word)
+    return outputs
         #print("@@@@@@@@@@@")
 
 string  = "cpen 291"
