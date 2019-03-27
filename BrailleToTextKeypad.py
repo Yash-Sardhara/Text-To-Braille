@@ -118,7 +118,7 @@ def submit():
         number_flag = 1
         return
     try:
-        char = braille_dictonary[user_input]
+        char = braille_dictionary[user_input]
         print(char)
         sentence = sentence + char
     except:
