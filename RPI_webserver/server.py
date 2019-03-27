@@ -30,9 +30,15 @@ def game():
 
 @app.route("/sendBraille")
 def sendBraille():
+    global text
     text = request.args.get('text')
+    return text
 
-    return render_template('translator.html', text = text)
+@app.route("/updateText")
+def updateText():
+    print(text, file=sys.stderr)
+    # toUpdate["text"] = text
+    return json.dumps(text)
 
 @app.route("/test")
 def test():
