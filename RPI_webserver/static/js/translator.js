@@ -13,10 +13,6 @@ function printBraille() {
             return;
         }
     }
-
-    var myText = document.getElementById('remind');
-    myText.innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
-    $('button').prop('disabled', true);
     $.ajax({
         type:"POST",
         contentType: "application/json;charset=utf-8",
@@ -25,6 +21,11 @@ function printBraille() {
         data: JSON.stringify({input}),
         dataType: "json"
     })
+
+    var myText = document.getElementById('remind');
+    myText.innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
+    $('button').prop('disabled', true);
+   
     return x;
     
     
