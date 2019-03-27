@@ -35,6 +35,7 @@ def textToBraille (character):
                  "?":[0,0,1,0,1,1],
                  "!":[0,0,1,1,1,0],
                  ":":[0,0,1,1,0,0],
+                 "-":[0,0,0,0,1,1],
                  "CAPS":[0,0,0,0,0,1],
                  }
     
@@ -63,14 +64,9 @@ def printBrailleNumber(character) :
 def printBraille (word) :
     numUpperCase = 0
     numberStatus = False
-    capsStatus = False
-    capsQueue = Queue()
         
     for letter in word:
-        if letter.isupper():
-            capsStatus = True
-            capsQueue.put(letter.lower())
-        elif letter.isdigit():
+        if letter.isdigit():
             if numberStatus == False :
                 numberStatus = True
                 tempPrint(textToBraille("#"))
@@ -82,29 +78,10 @@ def printBraille (word) :
                 numberStatus = False
                 tempPrint(textToBraille(";"))
                 tempPrint(textToBraille(letter.lower()))
-            elif capsStatus == True :
-                if capsQueue.qsize() == 1 :
-                    capsStatus = False
-                    tempPrint(textToBraille(","))
-                    tempPrint(textToBraille(capsQueue.get()))
-                    tempPrint(textToBraille(letter.lower()))
-                else :
-                    capsStatus = False
-                    tempPrint(textToBraille("CAPS"))
-                    tempPrint(textToBraille("CAPS"))
-                    while capsQueue.qsize() != 1:
-                        tempPrint(textToBraille(capsQueue.get()))
-                    tempPrint(textToBraille("CAPS"))
-                    tempPrint(textToBraille(capsQueue.get()))
-                    tempPrint(textToBraille(letter.lower()))
             else :
-                tempPrint(textToBraille(letter.lower()))
-                
-    while not capsQueue.empty() :
-        tempPrint(textToBraille(capsQueue.get()))
-        
+                tempPrint(textToBraille(letter.lower()))  
 
-string  = "WILSon!"
+string  = "iancmx!"
 printBraille(string)
 
 
