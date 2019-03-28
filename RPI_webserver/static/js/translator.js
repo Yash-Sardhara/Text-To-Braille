@@ -29,7 +29,6 @@ function printBraille() {
         type:"POST",
         contentType: "application/json;charset=utf-8",
         url:"/getText",
-        traditional: "true",
         data: JSON.stringify({input}),
         dataType: "json"
     })
@@ -54,7 +53,6 @@ $(document).ready(function loadText() {
 });
 
 function updateText(text) {
-    console.log(text)
+    //console.log(text)
     document.getElementById('textFromKeypad').innerHTML = text;
 }
-
