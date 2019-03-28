@@ -45,8 +45,7 @@ function loadText() {
         async:false,
         success: function(data){
             text = data
-            console.log(text)
-            document.getElementById('textFromKeypad').innerHTML = text;
+            updateText(text)
         },
         complete: function(){
             setTimeout(loadText, 1000);
@@ -55,4 +54,8 @@ function loadText() {
 
 };
 
+function updateText(text) {
+    console.log(text)
+    document.getElementById('textFromKeypad').innerHTML = text;
+}
 
