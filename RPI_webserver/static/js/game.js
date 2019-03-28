@@ -9,7 +9,7 @@ function printBraille() {
     var input = document.getElementById('myTextArea').value;
     console.log(input);
     // check if the input is valid
-    var isNum = false;
+    var prevIsNum = false;
     var sum = 0;
     if (input.length == 0) {
         document.getElementById('modalTitle').innerHTML = "Submission Failed!";
@@ -24,16 +24,9 @@ function printBraille() {
         }
         if(validNums.has(input[i]) && isNum == false) {
             sum++;
-            isNum = true;
-            console.log("true");
         }
-        
-        if(!validNums.has(input[i]) && isNum == true) {
-            if (input[i]!=" "){
-                sum++;
-            }
-            isNum = false;
-            console.log("false");
+        if(!validNums.has(input[i]) && isNum == true && input[i]!=" ") {
+            sum++;
         }
         sum++;
     }
@@ -43,13 +36,7 @@ function printBraille() {
         document.getElementById('modalBody').innerHTML = "Exceeded max characters allowed by ".concat(sum-52, " characters.");
         return;
     } 
-
-    // disable button and display note to user
-    document.getElementById('modalTitle').innerHTML = "Submission Successful!";
-    document.getElementById('modalBody').innerHTML = "Printing in progress...";
-    document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
-    $('button').prop('disabled', true);
-    console.log(sum);
+    
 
     // send request to server
     // $.ajax({
@@ -61,31 +48,9 @@ function printBraille() {
     //     dataType: "json"
     // })
 
+    console.log(sum);
+    return sum;
 }
-
-$(document).ready(function loadText() {
-    // $.ajax({
-    //     type:"GET",
-    //     url:"/updateText",
-    //     dataType:"json",
-    //     async:false,
-    //     success: function(data){
-    //         text = data;
-    //         updateText(text)
-    //     },
-    //     complete: function(){
-    //         setTimeout(loadText, 1000);
-    //     }
-    // })
-
-});
-
-function updateText(text) {
-    console.log(text)
-    document.getElementById('textFromKeypad').innerHTML = text;
-}
-
-
 
 
 

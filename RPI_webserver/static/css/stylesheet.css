@@ -10,9 +10,7 @@
     top: 10px;
 }
 
-.mainBackground {
-    width: 100%;
-}
+
 #whatWeDo{
     background: url("../../static/images/mainBackground1.png") no-repeat center center;
     -webkit-background-size: 100% 100%;
@@ -37,5 +35,25 @@
     height: 100%;
     width: 100%;
     text-align: center; 
+}
+
+#gameContainer {
+    height: 1000px;
+    background: url("../../static/images/greenBackground.jpg") no-repeat center center;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    height: 100%;
+    width: 100%;
+    text-align: center; 
+}
+
+#cartoon {
+    width: 40%;
+    height: 60%;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 
