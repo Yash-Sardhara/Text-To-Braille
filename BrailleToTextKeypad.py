@@ -1,13 +1,16 @@
 import RPi.GPIO as GPIO
 from collections import defaultdict
 import time
+import requests
 
 padRows= [17,27,22,5] 
 padCols= [6,13,19]
 
 keypad = [['1','2','3'],['4','5','6'],['7','8','9'],['*','0','#']] #2D Matrix
 
+
 GPIO.setmode(GPIO.BCM) #sets board mode
+GPIO.setwarnings(False)
 GPIO.setup(padRows[0], GPIO.IN,pull_up_down=GPIO.PUD_UP) #if pressed we will read GPIO.LOW, else GPIO.HIGH if not pressed
 GPIO.setup(padRows[1], GPIO.IN,pull_up_down=GPIO.PUD_UP) 
 GPIO.setup(padRows[2], GPIO.IN,pull_up_down=GPIO.PUD_UP) 
@@ -73,6 +76,8 @@ braille_dictionary = dict([
 
 
 
+
+
 def keypad_check():
     global curr_time, start_time
     for j in range (3):
@@ -126,9 +131,11 @@ def submit():
 def translate():
     global sentence
     print(sentence)
-    sentence = ""
     url = "http://cpen291-12.ece.ubc.ca/sendBraille?text=" + sentence
-    result = request.get(url)
+    print(url)
+    result = requests.get(url)
+    print(result.status_code)
+    sentence = ""
     
 def braille_to_char():
     global sentence,number_flag
@@ -136,14 +143,21 @@ def braille_to_char():
     if (input == '10'):
         return
     elif (input == '3'):
-        del inputs[-1]
+        try:
+            del inputs[-1]
+        except:
+            print("you better stop")
     elif (input == '6'):
-        sentence = sentence[:-1]
+        try:
+            sentence = sentence[:-1]
+        except:
+            print("you better stop!")
     elif (input == '0'):
         number_flag = 0
         sentence = sentence + ' '
     elif (input == '*'):
         inputs.clear()
+        sentence = ""
     elif (input == '#'):
         if number_flag == 0:
             submit()
