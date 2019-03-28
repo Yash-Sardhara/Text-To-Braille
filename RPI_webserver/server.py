@@ -5,6 +5,7 @@ import json
 from Text_To_Braille import printBrailleSentence
 import sys
 
+text = "(Default)"
 
 app = Flask(__name__)
 
