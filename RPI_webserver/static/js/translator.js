@@ -45,6 +45,7 @@ function loadText() {
         async:false,
         success: function(data){
             text = data
+            console.log(text)
             document.getElementById('textFromKeypad').innerHTML = text;
         },
         complete: function(){
