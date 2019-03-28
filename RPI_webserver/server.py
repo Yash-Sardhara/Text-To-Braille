@@ -53,5 +53,10 @@ def getText():
     else:
         return "WTF"
 
+@app.route("/printJobComplete")
+def printJobComplete():
+    braille = "default"
+    return "Printer Idle"
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
