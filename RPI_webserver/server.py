@@ -5,6 +5,8 @@ import json
 from Text_To_Braille import printBrailleSentence
 import sys
 
+text = "(Default)"
+braille = "default"
 
 app = Flask(__name__)
 
@@ -30,25 +32,26 @@ def game():
 
 @app.route("/sendBraille")
 def sendBraille():
+    global text
     text = request.args.get('text')
+    return text
 
-    return render_template('translator.html', text = text)
+@app.route("/updateText")
+def updateText():
+    print(text, file=sys.stderr)
+    return json.dumps(text)
 
-@app.route("/test")
-def test():
-    c = request.args.get('c')
-    # return json.dumps(printBrailleNumber(c))
-    return json.dumps(braille)
-
-@app.route("/getText", methods = ['POST']) 
+@app.route("/getText", methods=['POST', 'GET']) 
 def getText():
     global braille
-    text = request.get_json()['input']
-    print(text, file=sys.stderr)
-    braille = printBrailleSentence(text)
-    print(braille, file=sys.stderr)
-    return "text"
-
+    if request.method == 'POST':
+        braille = request.get_json()["input"]
+        print(braille, file=sys.stderr)
+        return "POST"
+    elif request.method == 'GET':
+        return json.dumps(braille)
+    else:
+        return "WTF"
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
