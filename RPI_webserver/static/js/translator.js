@@ -2,6 +2,7 @@ var validChars = new Set(["a","b","c","d","e","f","g","h","i","j","k","l","m","n
     "u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T", 
     "U","V","W","X","Y","Z","#","0","1","2","3","4","5","6","7","8","9",";","'","?","!",":","-",","," "]); 
 
+
 function printBraille() {
     var input = document.getElementById('myTextArea').value;
     console.log(input);
@@ -28,30 +29,30 @@ function printBraille() {
         type:"POST",
         contentType: "application/json;charset=utf-8",
         url:"/getText",
-        traditional: "true",
         data: JSON.stringify({input}),
         dataType: "json"
     })
 
 }
 
-window.onload = loadText()
-
-function loadText() {
+$(document).ready(function loadText() {
     $.ajax({
         type:"GET",
         url:"/updateText",
         dataType:"json",
         async:false,
         success: function(data){
-            text = data
-            document.getElementById('textFromKeypad').innerHTML = text;
+            text = data;
+            updateText(text)
         },
         complete: function(){
             setTimeout(loadText, 1000);
         }
     })
 
-};
+});
 
-
+function updateText(text) {
+    //console.log(text)
+    document.getElementById('textFromKeypad').innerHTML = text;
+}
