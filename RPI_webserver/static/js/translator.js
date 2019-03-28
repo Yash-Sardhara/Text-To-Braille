@@ -36,6 +36,9 @@ function printBraille() {
     })
 
 }
+
+window.onload = loadText()
+
 function loadText() {
     $.ajax({
         type:"GET",
@@ -44,13 +47,13 @@ function loadText() {
         async:false,
         success: function(data){
             text = data
-            console.log(text)
+        },
+        complete: function(){
+            setTimeout(loadText, 1000);
         }
     })
 
     document.getElementById('textFromKeypad').innerHTML = text;
-    console.log(text)
 };
-
 
 
