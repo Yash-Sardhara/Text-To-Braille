@@ -67,7 +67,7 @@ $(document).ready(function buttonStatus() {
 
         },
         complete: function(){
-            setTimeout(buttonStatus, 1000);
+            setTimeout(buttonStatus, 500);
         }
     })
 
@@ -83,6 +83,6 @@ function disableSubmit() {
 
 function enableSubmit() {
     $("#submit").prop('disabled', false);
-    document.getElementById('remind').innerHTML = "(Ready for Submission...)";
+    document.getElementById('remind').innerHTML = "(Printer is Idle... Ready for Submission...)";
 }
 
