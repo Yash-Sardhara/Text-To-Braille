@@ -16,7 +16,7 @@ GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 servo = GPIO.PWM(21, 50)
 servoY = GPIO.PWM(13, 50)
 servoX = GPIO.PWM(18, 50)
-servo.start(5) # Set Center
+#servo.start(5) # Set Center
 sleep(1)
 
 outputs = []
@@ -33,12 +33,22 @@ def punchHole ():
         servo.ChangeDutyCycle(10.5 - i/10)
         sleep(0.04)
 
+def fakePunchHole ():
+    for i in range (0,20):
+        servo.ChangeDutyCycle(5 + i/10)
+        sleep(0.02)
+    sleep(0.6)
+    for i in range (0,20):
+        servo.ChangeDutyCycle(7 - i/10)
+        sleep(0.04)
+
 def moveLeft ():
     servoX.start(12)
     sleep(0.02)
     servoX.start(45)
     sleep(0.02)
-    servoX.stop() 
+    servoX.stop()
+
   
 def moveUp():
     servoY.start(8)
@@ -54,39 +64,36 @@ def moveNextCharLeft():
     sleep(0.02)
 
 def moveNextLine():
-    servoY.start(9)
-    sleep(0.02)
+    servoY.start(8)
+    sleep(0.04)
+    servoY.start(45)
+    sleep(0.04)
     servoY.stop()
-    sleep(0.02)
 
 def emptyLineHandler():
-    servoY.start(8)
-    sleep(0.1)
-    servoY.start(45)
-    sleep(0.1)
+    servoY.start(15)
+    sleep(0.02)
     servoY.stop()
         
 def printLines():
-    if len(line3) == 0:
-        emptyLineHandler()
-    else:
+    if len(line3) != 0:
         printLine(line3)
-    if len(line2) == 0:
-        emptyLineHandler()
-    else:
+        moveNextLine()
+    if len(line2) != 0:
         printLine(line2)
-    if len(line1) == 0:
-        emptyLineHandler()
-    else:
+        moveNextLine()
+    if len(line1) != 0:
         printLine(line1)
+        moveNextLine()
     reset()
     
 def reset():
     servo.ChangeDutyCycle(5)
+    sleep(0.02)
     resetX()
-    sleep(3)
-    resetY()
-    sleep(3)
+    sleep(0.02)
+#    resetY()
+#    sleep(0.02)
     
 def resetX():
     while True:  
@@ -107,12 +114,16 @@ def resetY():
         servoY.start(0.5)
         if (GPIO.input(26)):
             servoY.stop()
-            sleep(3)
+            sleep(0.02)
             servoY.start(45)
-            sleep(0.12)
+            sleep(0.04)
+            servoY.stop()
+            servoY.start(55)
+            sleep(0.04)
             servoY.stop()
             sleep(0.02)
             break
+
 
 '''
 1 0
@@ -120,7 +131,7 @@ def resetY():
 5 4
 '''
 def printLine(line):
-    dot_num = 4 #always starts at bottom right
+    dot_num = 4 #always starts at bottom right  
     for i in range(3):
         for j in line:
             if (j[dot_num]):
@@ -129,13 +140,17 @@ def printLine(line):
             sleep(0.02)
             if (j[dot_num+1]):
                 punchHole()
+            else:
+                fakePunchHole()
             moveNextCharLeft()
             sleep(0.02)
         dot_num = dot_num - 2
-    resetX()
-    sleep(0.02)
-    moveNextLine()
-    sleep(0.02)
+        resetX()
+        sleep(0.02)
+        fakePunchHole()
+        moveUp()
+        sleep(0.02)
+        
 
 def textToBraille (character):
     toBraille = {"a":[1,0,0,0,0,0],
@@ -280,15 +295,16 @@ while True :
     inputMessage = r.json()
 
     if inputMessage != "default":
+        servo.start(5)
         printBrailleSentence(inputMessage)
         sortInput()
-        reset()
-        sleep(1)
+        resetX()
+#        reset()
         printLines()
-        sleep(1)
-        reset()
-        sleep(1)
+#        reset()
+        sleep(0.02)
         trigger()
+        servo.stop()
     else:
         print("No Job Queued")
     time.sleep(1)

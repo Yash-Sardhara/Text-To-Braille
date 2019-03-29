@@ -26,6 +26,15 @@ def punchHole ():
         servo.ChangeDutyCycle(10.5 - i/10)
         sleep(0.04)
 
+def fakePunchHole ():
+    for i in range (0,20):
+        servo.ChangeDutyCycle(5 + i/10)
+        sleep(0.02)
+    sleep(0.6)
+    for i in range (0,20):
+        servo.ChangeDutyCycle(7 - i/10)
+        sleep(0.04)
+
 def moveLeft ():
     servoX.start(12)
     sleep(0.02)
@@ -81,9 +90,19 @@ def printLines():
         printLine(line1)
     resetPosition()
 
-def resetPosition():
-    print("to be implemented")
-    #moves it down to the start
+def resetX():
+    while True:  
+        servoX.start(0.5)
+        if (GPIO.input(27)):
+            servoX.stop()
+            sleep(3)
+            moveNextCharLeft()
+            sleep(0.02)
+            moveNextCharLeft()
+            sleep(0.02)
+            moveNextCharLeft()
+            sleep(0.02)
+            break
 
 '''
 1 0
@@ -102,16 +121,43 @@ def printLine(line):
             sleep(0.02)
             if (j[dot_num+1]):
                 punchHole()
+            else :
+                fakePunchHole()
             moveNextCharLeft()
             sleep(0.02)
         dot_num = dot_num - 2
-    reset()
+        resetX()
+        sleep(0.02)
+        moveUp()
+        sleep(0.02)
     sleep(0.02)
     moveNextLine()
     sleep(0.02)
     
+def resetY():
+    while True:  
+        servoY.start(0.5)
+        if (GPIO.input(26)):
+            servoY.stop()
+            sleep(3)
+            servoY.start(45)
+            sleep(0.06)
+            servoY.stop()
+            servoY.start(55)
+            sleep(0.06)
+            servoY.stop()
+            sleep(0.02)
+            break
 
+def zeroHandler():
+    servoX.start(12)
+    sleep(0.02)
+    servoX.start(20)
+    sleep(0.02)
+    servoX.stop() 
+    
 servo.ChangeDutyCycle(5)
+
 
 '''
 string = "hi how was your day"
@@ -120,6 +166,8 @@ def printLines():
 #get string -> string to braille -> separate by line #s -> print line 3 -> reset to new line -> print line 2 -> reset to new line -> print line 1 -> reset to beginning
 '''
 
+
+input3 = [[1,1,1,1,1,1], [1,1,1,1,1,1], [1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1],[1,1,1,1,1,1]]
 
 
 servo.stop()
