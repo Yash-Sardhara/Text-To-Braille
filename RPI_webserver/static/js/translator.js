@@ -61,7 +61,6 @@ function printBraille() {
     document.getElementById('modalBody').innerHTML = "Printing in progress...";
     $("#exampleModal").modal();
     document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
-    $('button').prop('disabled', true);
     console.log(sum);
 
     // send request to server
