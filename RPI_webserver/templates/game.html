@@ -29,11 +29,10 @@
 
   <image src="../static/images/GameTitle.png" width="100%"></image>
   <div id="gameContainer">
-    <p style = "font-family:georgia,garamond; font-size:30px;"><br>Hey how many random braille characters should I print out?</p>
-
+    <p style = "font-family:georgia,garamond; font-size:30px;"><br>Hey how many random braille characters should the robot print out?</p>
     <form>
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-        <option selected>Choose...</option>
+      <select class="custom-select mr-sm-2" id="mySelect">
+        <option value="0">Choose...</option>
         <option value="1">1</option> <option value="2">2</option> <option value="3">3</option>
         <option value="4">4</option> <option value="5">5</option> <option value="6">6</option>
         <option value="7">7</option> <option value="8">8</option> <option value="9">9</option>
@@ -54,13 +53,41 @@
         <option value="52">52</option> 
       </select>
       <br><br>
-      <button type="submit" class="btn btn-primary" id="submitGame">Submit</button>
-    
+      <button type="submit" class="btn btn-primary" id="submitGame" onclick="sendPrint()" data-toggle="modal" 
+        data-target="#exampleModal">Submit for Printing</button>
+      <br><br>
+      <p id="message">(null)</p>
+
+      <div class="form-group" id="container">
+        <label for="exampleFormControlTextarea1">Your answer:</label>
+        <textarea id="gameAnswer" class="form-control" rows = "3" style="width: 100%;"></textarea></div>
+      <button type="submit" class="btn btn-primary" id="checkAnswer" onclick="verifyAnswer()"> Submit Your Answer</button>
+      </div>
     </form>
   </div>
+
+  <!-- Modal -->
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mTitle"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p class="lead" id="mBody">Demo.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
   
-  <script type="text/javascript" src="../static/js/translator.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../static/js/game.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

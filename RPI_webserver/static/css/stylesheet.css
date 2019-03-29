@@ -56,3 +56,8 @@
     bottom: 0px;
 }
 
+.container {
+    float: center;
+    width: 60%;
+}
+
