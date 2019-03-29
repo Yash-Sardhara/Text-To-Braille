@@ -39,7 +39,7 @@
 
 #gameContainer {
     height: 700px;
-    background: url("../../static/images/greenBackground.jpg") no-repeat center center;
+    background: url("../../static/images/greenBackground3.jpg") no-repeat center center;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
@@ -56,8 +56,4 @@
     bottom: 0px;
 }
 
-.container {
-    float: center;
-    width: 60%;
-}
 

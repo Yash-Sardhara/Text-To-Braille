@@ -52,16 +52,13 @@
         <option value="52">52</option> 
       </select>
       <br><br>
-      <button type="submit" class="btn btn-primary" id="submitGame" onclick="sendPrint()" data-toggle="modal" 
-        data-target="#exampleModal">Submit for Printing</button>
+      <button type="submit" class="btn btn-primary" id="submitGame" onclick="sendPrint()">Submit for Printing</button>
       <br><br>
       <p id="message"></p>
-
-      <div class="form-group" id="container">
-        <label for="exampleFormControlTextarea1">Your answer:</label>
+      <div class="form-group">
+        <p style = "font-family:georgia,garamond; font-size:30px;">Your answer:</p>
         <textarea id="gameAnswer" class="form-control" rows = "3" style="width: 100%;"></textarea></div>
-      <button type="submit" class="btn btn-primary" id="checkAnswer" onclick="verifyAnswer()" data-toggle="modal" 
-      data-target="#exampleModal"> Submit Your Answer</button>
+      <button type="submit" class="btn btn-primary" id="checkAnswer" onclick="verifyAnswer()" > Submit Your Answer</button>
       </div>
   </div>
 

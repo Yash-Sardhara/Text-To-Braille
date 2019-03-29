@@ -15,11 +15,13 @@ function printBraille() {
     if (input.length == 0) {
         document.getElementById('modalTitle').innerHTML = "Submission Failed!";
         document.getElementById('modalBody').innerHTML = "Empty input";
+        $("#exampleModal").modal();
         return;
     } 
     if (input.length > maxChar) {
         document.getElementById('modalTitle').innerHTML = "Submission Failed!";
         document.getElementById('modalBody').innerHTML = "Too many characters";
+        $("#exampleModal").modal();
         return;
     } 
 
@@ -27,6 +29,7 @@ function printBraille() {
         if(!validAlphabets.has(input[i]) && !validNums.has(input[i]) && !validPuncs.has(input[i]) && input[i]!=" "){
             document.getElementById('modalTitle').innerHTML = "Submission Failed!";
             document.getElementById('modalBody').innerHTML = "Invalid Input: ' ".concat(input[i], " '", '.');
+            $("#exampleModal").modal();
             return;
         }
         if(validNums.has(input[i]) && isNum == false) {
@@ -49,44 +52,54 @@ function printBraille() {
     if (sum > maxChar) {
         document.getElementById('modalTitle').innerHTML = "Submission Failed!";
         document.getElementById('modalBody').innerHTML = "Exceeded max characters allowed by ".concat(sum-52, " characters.");
+        $("#exampleModal").modal();
         return;
     } 
 
     // disable button and display note to user
     document.getElementById('modalTitle').innerHTML = "Submission Successful!";
     document.getElementById('modalBody').innerHTML = "Printing in progress...";
+    $("#exampleModal").modal();
     document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
     $('button').prop('disabled', true);
     console.log(sum);
 
     // send request to server
-    // $.ajax({
-    //     type:"POST",
-    //     contentType: "application/json;charset=utf-8",
-    //     url:"/getText",
-    //     traditional: "true",
-    //     data: JSON.stringify({input}),
-    //     dataType: "json"
-    // })
+    $.ajax({
+        type:"POST",
+        contentType: "application/json;charset=utf-8",
+        url:"/getText",
+        traditional: "true",
+        data: JSON.stringify({input}),
+        dataType: "json"
+    })
 
 }
 
+document.getElementById("myTextArea")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        s = document.getElementById('myTextArea').value 
+        document.getElementById('myTextArea').value = s.substring(0, s.length - 1);
+        document.getElementById("submit").click();
+    }
+});
+
 $(document).ready(function loadText() {
-    // $.ajax({
-    //     type:"GET",
-    //     url:"/updateText",
-    //     dataType:"json",
-    //     async:false,
-    //     success: function(data){
-    //         text = data;
-    //         updateText(text)
-    //     },
-    //     complete: function(){
-    //         setTimeout(loadText, 1000);
-    //     }
-    // })
-
-
+    $.ajax({
+        type:"GET",
+        url:"/updateText",
+        dataType:"json",
+        async:false,
+        success: function(data){
+            text = data;
+            updateText(text)
+        },
+        complete: function(){
+            setTimeout(loadText, 1000);
+        }
+    })
 });
 
 function updateText(text) {
@@ -116,8 +129,6 @@ $(document).ready(function buttonStatus() {
 
 function disableSubmit() {
     // disable button and display note to user
-    document.getElementById('modalTitle').innerHTML = "Submission Successful!";
-    document.getElementById('modalBody').innerHTML = "Printing in progress...";
     document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
     $("#submit").prop('disabled', true);
 }
