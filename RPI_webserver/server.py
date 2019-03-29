@@ -7,6 +7,7 @@ import sys
 
 text = "(Default)"
 braille = "default"
+printerBusy = False
 
 app = Flask(__name__)
 
@@ -45,16 +46,25 @@ def updateText():
 def getText():
     global braille
     if request.method == 'POST':
+        global printerBusy
         braille = request.get_json()["input"]
         print(braille, file=sys.stderr)
+        print(printerBusy, file=sys.stderr)
+        printerBusy = True
         return "POST"
     elif request.method == 'GET':
         return json.dumps(braille)
     else:
         return "WTF"
 
+@app.route("/printerStatus", methods=['GET'])
+def printerStatus():
+    return json.dumps(printerBusy)
+
 @app.route("/printJobComplete")
 def printJobComplete():
+    global printerBusy, braille
+    printerBusy = False
     braille = "default"
     return "Printer Idle"
 
