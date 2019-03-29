@@ -38,7 +38,7 @@
 }
 
 #gameContainer {
-    height: 1000px;
+    height: 700px;
     background: url("../../static/images/greenBackground.jpg") no-repeat center center;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -51,7 +51,7 @@
 #cartoon {
     width: 40%;
     height: 60%;
-    position: absolute;
+    position: relative;
     right: 0px;
     bottom: 0px;
 }

@@ -4,7 +4,7 @@ var validAlphabets = new Set(["a","b","c","d","e","f","g","h","i","j","k","l","m
 var validNums = new Set(["0","1","2","3","4","5","6","7","8","9"]);
 var validPuncs = new Set(["#",";","'","?","!",":","-",","," ", "."])
 
-var maxChar = 52;
+var maxChar = 33;
 
 function printBraille() {
     var input = document.getElementById('myTextArea').value;

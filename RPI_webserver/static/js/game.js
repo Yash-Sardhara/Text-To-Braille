@@ -1,48 +1,53 @@
-var validChars = new Set(["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
-    "u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T", 
-    "U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9","#",";","'","?","!",":","-",","," ","."]); 
+var validChars = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
+    "u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9","#",";","'","?","!",":","-",","," ","."];
+var validCharsSize = 46;
+var attempts = 3;
 
-var randomString;
+var validNums = new Set(["0","1","2","3","4","5","6","7","8","9"]);
+
+
+var randomString = "";
+var rChar = "a";
 
 function sendPrint() {
     var input = document.getElementById('mySelect').value;
-    // // console.log("validChars, "+ validChars.length);
-    console.log("hey");
-    // // check if the input is valid
-    // var isNum = false;
-    // var sum = 0;
+    console.log(input);
 
-    // for (var i=0; i<input; i++) {
-    //     if(validNums.has(input[i]) && isNum == false) {
-    //         sum++;
-    //         isNum = true;
-    //         console.log("true");
-    //     }
-        
-    //     if(!validNums.has(input[i]) && isNum == true) {
-    //         if (input[i]!=" "){
-    //             sum++;
-    //         }
-    //         isNum = false;
-    //         console.log("false");
-    //     }
-    //     sum++;
-    // }
-
-
-    // if (sum > maxChar) {
-    //     document.getElementById('modalTitle').innerHTML = "Submission Failed!";
-    //     document.getElementById('modalBody').innerHTML = "Exceeded max characters allowed by ".concat(sum-52, " characters.");
-    //     return;
-    // } 
+    if (input == 0) {
+        // disable button and display note to user
+        document.getElementById('mTitle').innerHTML = "Submit something!";
+        document.getElementById('mBody').innerHTML = "Choose a number for the robot to print.";
+        document.getElementById('message').innerHTML = "";
+        return;
+    }
+    var isNum = false;
 
     // disable button and display note to user
+    document.getElementById('mTitle').innerHTML = "Submission Successful!";
+    document.getElementById('mBody').innerHTML = "Printing in progress...";
+    document.getElementById('message').innerHTML = "You have 3 attempts. You have to win (or refresh) to replay.";
+    $('#submitGame').prop('disabled', true);
 
-    // document.getElementById('mTitle').innerHTML = "Submission Successful!";
-    // document.getElementById('mBody').innerHTML = "Printing in progress...";
-    // document.getElementById('message').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
-    // $('submitGame').prop('disabled', true);
-    // console.log(sum);
+    for (var i=0; i < input; i++) {
+        rChar = validChars[Math.floor(Math.random() * validCharsSize)];
+        console.log(rChar);
+        randomString = randomString.concat(rChar);
+        // if(validNums.has(randomString[i]) && isNum == false) {
+        //     i++;
+        //     isNum = true;
+        //     // console.log("true");
+        // }
+        
+        // if(!validNums.has(randomString[i]) && isNum == true) {
+        //     if (input[i]!=" "){
+        //         i++;
+        //     }
+        //     isNum = false;
+        //     // console.log("false");
+        // }
+
+    }
+    console.log(randomString);
 
     // send request to server
     // $.ajax({
@@ -56,62 +61,42 @@ function sendPrint() {
 
 }
 
-// $(document).ready(function loadText() {
-    // $.ajax({
-    //     type:"GET",
-    //     url:"/updateText",
-    //     dataType:"json",
-    //     async:false,
-    //     success: function(data){
-    //         text = data;
-    //         updateText(text)
-    //     },
-    //     complete: function(){
-    //         setTimeout(loadText, 1000);
-    //     }
-    // })
-
-
-// });
-
-
-// $(document).ready(function buttonStatus() {
-//     $.ajax({
-//         type:"GET",
-//         url:"/printerStatus",
-//         dataType:"json",
-//         async:false,
-//         success: function(printerBusy){
-//             if (printerBusy == true)
-//                 disableSubmit()
-//             else
-//                 enableSubmit()
-
-//         },
-//         complete: function(){
-//             setTimeout(buttonStatus, 500);
-//         }
-//     })
-
-// });
-
-// function disableSubmit() {
-//     // disable button and display note to user
-//     document.getElementById('modalTitle').innerHTML = "Submission Successful!";
-//     document.getElementById('modalBody').innerHTML = "Printing in progress...";
-//     document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
-//     $("submitGame").prop('disabled', true);
-// }
-
-// function enableSubmit() {
-//     $("submitGame").prop('disabled', false);
-//     document.getElementById('remind').innerHTML = "(Printer is Idle... Ready for Submission...)";
-// }
-
-
 function verifyAnswer() {
     var input = document.getElementById('gameAnswer').value;
     console.log(input);
+    if (randomString == "") {
+        document.getElementById('mTitle').innerHTML = "Submit something!";
+        document.getElementById('mBody').innerHTML = "Choose a number for the robot to print.";
+        document.getElementById('message').innerHTML = "";
+        return;
+    }
+    if (attempts > 0) {
+        if (input == randomString) {
+            document.getElementById('mTitle').innerHTML = "Answer Correct!";
+            document.getElementById('mBody').innerHTML = "You won!!!!";
+            document.getElementById('message').innerHTML = "Do you want to replay?";
+            $('#submitGame').prop('disabled', false);
+            randomString = "";
+            attempts = 3;
+            console.log("win");
+        } else {
+            attempts--;
+            if (attempts == 0) {
+                attempts--;
+                document.getElementById('mTitle').innerHTML = "Answer Incorrect...";
+                document.getElementById('mBody').innerHTML = "You lost!";
+                document.getElementById('message').innerHTML = "You have no more attempts. Refresh to replay.";
+                $('#checkAnswer').prop('disabled', true);
+                console.log("lose");
+            } else {
+                document.getElementById('mTitle').innerHTML = "Answer Incorrect...";
+            document.getElementById('mBody').innerHTML = "Try again!";
+            document.getElementById('message').innerHTML = "You have ".concat(attempts,  " attempts left. You have to win (or refresh) to replay.");
+            console.log("trying");
+            }
+        }  
+    }
 }
+
 
 
