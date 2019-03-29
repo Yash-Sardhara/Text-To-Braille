@@ -99,9 +99,8 @@ $(document).ready(function(){
 $(".tooltiptext").mousedown(function(){
     
     if (!showCheatsheet) {
-        document.getElementById('mTitle').innerHTML = "Run!";
-        document.getElementById('mBody').innerHTML = "Tor is watching you";
-        $("#Tor").css("opacity", "1");
+        document.getElementById('mTitle').innerHTML = "Abort!";
+        document.getElementById('mBody').innerHTML = "Farshid is watching you!!!";
         $("#exampleModal").modal();
         $("#cheatSheet").css("opacity", "1");
         showCheatsheet = true;
