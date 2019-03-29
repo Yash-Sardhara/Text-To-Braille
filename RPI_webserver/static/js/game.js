@@ -8,6 +8,7 @@ var validNums = new Set(["0","1","2","3","4","5","6","7","8","9"]);
 
 var randomString = "";
 var rChar = "a";
+var showCheatsheet = false;
 
 function sendPrint() {
     var input = document.getElementById('mySelect').value;
@@ -92,9 +93,22 @@ function verifyAnswer() {
     }
 }
 
-$("cheatSheet").hover(function(){
-    $(this).css("background-color", "yellow");
-    }, function(){
-    $(this).css("opacity", "0");
-  });
 
+
+$(document).ready(function(){
+$(".tooltiptext").mousedown(function(){
+    
+    if (!showCheatsheet) {
+        document.getElementById('mTitle').innerHTML = "Run!";
+        document.getElementById('mBody').innerHTML = "Tor is watching you";
+        $("#Tor").css("opacity", "1");
+        $("#exampleModal").modal();
+        $("#cheatSheet").css("opacity", "1");
+        showCheatsheet = true;
+    } else {
+        $("#cheatSheet").css("opacity", "0");
+        showCheatsheet = false;
+    }
+    
+    });
+});
