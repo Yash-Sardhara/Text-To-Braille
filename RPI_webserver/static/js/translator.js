@@ -5,6 +5,7 @@ var validNums = new Set(["0","1","2","3","4","5","6","7","8","9"]);
 var validPuncs = new Set(["#",";","'","?","!",":","-",","," ", "."])
 
 
+
 function printBraille() {
     var input = document.getElementById('myTextArea').value;
     console.log(input);
@@ -37,6 +38,7 @@ function printBraille() {
         }
         sum++;
     }
+
 
     if (sum > 52) {
         document.getElementById('modalTitle').innerHTML = "Submission Failed!";
@@ -78,6 +80,7 @@ $(document).ready(function loadText() {
     //     }
     // })
 
+
 });
 
 function updateText(text) {
@@ -85,6 +88,38 @@ function updateText(text) {
     document.getElementById('textFromKeypad').innerHTML = text;
 }
 
+$(document).ready(function buttonStatus() {
+    $.ajax({
+        type:"GET",
+        url:"/printerStatus",
+        dataType:"json",
+        async:false,
+        success: function(printerBusy){
+            if (printerBusy == true)
+                disableSubmit()
+            else
+                enableSubmit()
+
+        },
+        complete: function(){
+            setTimeout(buttonStatus, 500);
+        }
+    })
+
+});
+
+function disableSubmit() {
+    // disable button and display note to user
+    document.getElementById('modalTitle').innerHTML = "Submission Successful!";
+    document.getElementById('modalBody').innerHTML = "Printing in progress...";
+    document.getElementById('remind').innerHTML = "(Printing in progress... You can resubmit after the robot finishes printing)";
+    $("#submit").prop('disabled', true);
+}
+
+function enableSubmit() {
+    $("#submit").prop('disabled', false);
+    document.getElementById('remind').innerHTML = "(Printer is Idle... Ready for Submission...)";
+}
 
 
 
