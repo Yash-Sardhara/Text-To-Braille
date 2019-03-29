@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 
 outputs = []
 line1 = []
@@ -119,7 +120,7 @@ def trigger():
 
 def sortInput():
     count = 0;
-    outPutSize = len(ouputs)
+    outPutSize = len(outputs)
     while count < 11 and count < outPutSize :
         line1.append(outputs[count])
         count = count + 1
@@ -150,6 +151,7 @@ while True :
 
     if inputMessage != "default":
         printBrailleSentence(inputMessage)
+        sortInput()
         # printSim(inputMessage)
         trigger()
     else:
