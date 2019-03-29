@@ -95,19 +95,31 @@ def printBrailleSentence (sentence):
     return outputs
 
 def trigger():
-    r = request.get("http://cpen291-12.ece.ubc.ca/printJobComplete").status_code
+    r = requests.get("http://cpen291-12.ece.ubc.ca/printJobComplete").status_code
     while r != 200 :
-         r = request.get("http://cpen291-12.ece.ubc.ca/printJobComplete").status_code
-    
+        r = requests.get("http://cpen291-12.ece.ubc.ca/printJobComplete").status_code
+
+def printSim(message):
+    print("Starting Job")
+    time.sleep(5)
+    print(message)
+    time.sleep(5)
+    print("Job Complete")
 
 while True :
-    inputMessage = request.get("http://cpen291-12.ece.ubc.ca/getText").json()
-    print(inputMessage)
-    if inputMessage != default :
-        printBrailleSentence(string)
-        print(outputs)
+
+    r = requests.get("http://cpen291-12.ece.ubc.ca/getText")
+    while r.status_code != 200 :
+        r = requests.get("http://cpen291-12.ece.ubc.ca/getText")
+
+    inputMessage = r.json()
+
+    if inputMessage != "default":
+        printBrailleSentence(inputMessage)
+        # printSim(inputMessage)
         trigger()
-
-
+    else:
+        print("No Job Queued")
+    time.sleep(1)
 
     
