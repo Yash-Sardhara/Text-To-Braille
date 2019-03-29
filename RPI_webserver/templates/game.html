@@ -52,18 +52,24 @@
         <option value="52">52</option> 
       </select>
       <br><br>
-      <button type="submit" class="btn btn-primary" id="submitGame" onclick="sendPrint()" data-toggle="modal" 
-        data-target="#exampleModal">Submit for Printing</button>
+      <button type="submit" class="btn btn-primary" id="submitGame" onclick="sendPrint()">Submit for Printing</button>
       <br><br>
       <p id="message"></p>
-
-      <div class="form-group" id="container">
-        <label for="exampleFormControlTextarea1">Your answer:</label>
+      <div class="form-group">
+        <p style = "font-family:georgia,garamond; font-size:30px;">Your answer:</p>
         <textarea id="gameAnswer" class="form-control" rows = "3" style="width: 100%;"></textarea></div>
-      <button type="submit" class="btn btn-primary" id="checkAnswer" onclick="verifyAnswer()" data-toggle="modal" 
-      data-target="#exampleModal"> Submit Your Answer</button>
+        <button type="submit" class="btn btn-primary" id="checkAnswer" onclick="verifyAnswer()" >Submit Your Answer</button>
+        <br><br>
+        
+        <img src="../static/images/brl_dict2.jpg" alt="cheatSheet" id="cheatSheet">
+          <span class="tooltiptext" style="font-family:georgia,garamond; font-size:30px;">
+            Click to see cheatsheet <br /> Click again to unsee the cheatsheet before anyone sees you.</span>
+        </image>
       </div>
+      
   </div>
+
+
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -86,7 +92,7 @@
   </div>
   
 
-  <image src="../static/images/newBright.png" width="100%"></image>
+  <image src="../static/images/newBright.png" style="width: 100%; position: relative;"></image>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="../static/js/game.js"></script>

@@ -8,44 +8,35 @@ var validNums = new Set(["0","1","2","3","4","5","6","7","8","9"]);
 
 var randomString = "";
 var rChar = "a";
+var showCheatsheet = false;
 
 function sendPrint() {
     var input = document.getElementById('mySelect').value;
     console.log(input);
 
+    var isNum = false;
     if (input == 0) {
         // disable button and display note to user
         document.getElementById('mTitle').innerHTML = "Submit something!";
         document.getElementById('mBody').innerHTML = "Choose a number for the robot to print.";
         document.getElementById('message').innerHTML = "";
+        $("#exampleModal").modal();
         return;
     }
-    var isNum = false;
 
     // disable button and display note to user
     document.getElementById('mTitle').innerHTML = "Submission Successful!";
     document.getElementById('mBody').innerHTML = "Printing in progress...";
     document.getElementById('message').innerHTML = "You have 3 attempts. You have to win (or refresh) to replay.";
+    $("#exampleModal").modal();
     $('#submitGame').prop('disabled', true);
 
     for (var i=0; i < input; i++) {
         rChar = validChars[Math.floor(Math.random() * validCharsSize)];
         console.log(rChar);
         randomString = randomString.concat(rChar);
-        // if(validNums.has(randomString[i]) && isNum == false) {
-        //     i++;
-        //     isNum = true;
-        //     // console.log("true");
-        // }
-        
-        // if(!validNums.has(randomString[i]) && isNum == true) {
-        //     if (input[i]!=" "){
-        //         i++;
-        //     }
-        //     isNum = false;
-        //     // console.log("false");
-        // }
 
+        // maybe check how many braille characters that is
     }
     console.log(randomString);
 
@@ -67,6 +58,7 @@ function verifyAnswer() {
     if (randomString == "") {
         document.getElementById('mTitle').innerHTML = "Submit something!";
         document.getElementById('mBody').innerHTML = "Choose a number for the robot to print.";
+        $("#exampleModal").modal();
         document.getElementById('message').innerHTML = "";
         return;
     }
@@ -74,6 +66,7 @@ function verifyAnswer() {
         if (input == randomString) {
             document.getElementById('mTitle').innerHTML = "Answer Correct!";
             document.getElementById('mBody').innerHTML = "You won!!!!";
+            $("#exampleModal").modal();
             document.getElementById('message').innerHTML = "Do you want to replay?";
             $('#submitGame').prop('disabled', false);
             randomString = "";
@@ -85,14 +78,16 @@ function verifyAnswer() {
                 attempts--;
                 document.getElementById('mTitle').innerHTML = "Answer Incorrect...";
                 document.getElementById('mBody').innerHTML = "You lost!";
+                $("#exampleModal").modal();
                 document.getElementById('message').innerHTML = "You have no more attempts. Refresh to replay.";
                 $('#checkAnswer').prop('disabled', true);
                 console.log("lose");
             } else {
                 document.getElementById('mTitle').innerHTML = "Answer Incorrect...";
-            document.getElementById('mBody').innerHTML = "Try again!";
-            document.getElementById('message').innerHTML = "You have ".concat(attempts,  " attempts left. You have to win (or refresh) to replay.");
-            console.log("trying");
+                document.getElementById('mBody').innerHTML = "Try again!";
+                $("#exampleModal").modal();
+                document.getElementById('message').innerHTML = "You have ".concat(attempts,  " attempts left. You have to win (or refresh) to replay.");
+                console.log("trying");
             }
         }  
     }
@@ -100,3 +95,19 @@ function verifyAnswer() {
 
 
 
+$(document).ready(function(){
+$(".tooltiptext").mousedown(function(){
+    
+    if (!showCheatsheet) {
+        document.getElementById('mTitle').innerHTML = "Abort!";
+        document.getElementById('mBody').innerHTML = "Farshid is watching you!!!";
+        $("#exampleModal").modal();
+        $("#cheatSheet").css("opacity", "1");
+        showCheatsheet = true;
+    } else {
+        $("#cheatSheet").css("opacity", "0");
+        showCheatsheet = false;
+    }
+    
+    });
+});

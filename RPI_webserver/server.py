@@ -2,7 +2,6 @@ from __future__ import print_function
 from flask import Flask, render_template, request
 import sys
 import json
-from Text_To_Braille import printBrailleSentence
 import sys
 
 text = " "
