@@ -1,11 +1,141 @@
 import requests
 import json
 import time
+import RPi.GPIO as GPIO
+from time import sleep
+
+GPIO.setwarnings(False)
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(21, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+servo = GPIO.PWM(21, 50)
+servoY = GPIO.PWM(13, 50)
+servoX = GPIO.PWM(18, 50)
+servo.start(5) # Set Center
+sleep(1)
 
 outputs = []
 line1 = []
 line2 = []
 line3 = []
+
+def punchHole ():
+    for i in range (0,55):
+        servo.ChangeDutyCycle(5 + i/10)
+        sleep(0.02)
+    sleep(0.6)
+    for i in range (0,55):
+        servo.ChangeDutyCycle(10.5 - i/10)
+        sleep(0.04)
+
+def moveLeft ():
+    servoX.start(12)
+    sleep(0.02)
+    servoX.start(45)
+    sleep(0.02)
+    servoX.stop() 
+  
+def moveUp():
+    servoY.start(8)
+    sleep(0.02)
+    servoY.start(45)
+    sleep(0.02)
+    servoY.stop()
+    
+def moveNextCharLeft():
+    servoX.start(45)
+    sleep(0.02)
+    servoX.stop()
+    sleep(0.02)
+
+def moveNextLine():
+    servoY.start(9)
+    sleep(0.02)
+    servoY.stop()
+    sleep(0.02)
+
+def emptyLineHandler():
+    servoY.start(8)
+    sleep(0.1)
+    servoY.start(45)
+    sleep(0.1)
+    servoY.stop()
+        
+def printLines():
+    if len(line3) == 0:
+        emptyLineHandler()
+    else:
+        printLine(line3)
+    if len(line2) == 0:
+        emptyLineHandler()
+    else:
+        printLine(line2)
+    if len(line1) == 0:
+        emptyLineHandler()
+    else:
+        printLine(line1)
+    reset()
+    
+def reset():
+    servo.ChangeDutyCycle(5)
+    resetX()
+    sleep(3)
+    resetY()
+    sleep(3)
+    
+def resetX():
+    while True:  
+        servoX.start(0.5)
+        if (GPIO.input(27)):
+            servoX.stop()
+            sleep(3)
+            moveNextCharLeft()
+            sleep(0.02)
+            moveNextCharLeft()
+            sleep(0.02)
+            moveNextCharLeft()
+            sleep(0.02)
+            break
+
+def resetY():
+    while True:  
+        servoY.start(0.5)
+        if (GPIO.input(26)):
+            servoY.stop()
+            sleep(3)
+            servoY.start(45)
+            sleep(0.12)
+            servoY.stop()
+            sleep(0.02)
+            break
+
+'''
+1 0
+3 2
+5 4
+'''
+def printLine(line):
+    dot_num = 4 #always starts at bottom right
+    for i in range(3):
+        for j in line:
+            if (j[dot_num]):
+                punchHole()
+            moveLeft()
+            sleep(0.02)
+            if (j[dot_num+1]):
+                punchHole()
+            moveNextCharLeft()
+            sleep(0.02)
+        dot_num = dot_num - 2
+    resetX()
+    sleep(0.02)
+    moveNextLine()
+    sleep(0.02)
 
 def textToBraille (character):
     toBraille = {"a":[1,0,0,0,0,0],
@@ -141,8 +271,8 @@ def printSim(message):
     print("Job Complete")
 '''
 
-while True :
 
+while True :
     r = requests.get("http://cpen291-12.ece.ubc.ca/getText")
     while r.status_code != 200 :
         r = requests.get("http://cpen291-12.ece.ubc.ca/getText")
@@ -152,7 +282,12 @@ while True :
     if inputMessage != "default":
         printBrailleSentence(inputMessage)
         sortInput()
-        # printSim(inputMessage)
+        reset()
+        sleep(1)
+        printLines()
+        sleep(1)
+        reset()
+        sleep(1)
         trigger()
     else:
         print("No Job Queued")
